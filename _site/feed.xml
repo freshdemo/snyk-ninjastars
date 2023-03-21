@@ -1,13 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.5.2">Jekyll</generator><link href="http://0.0.0.0:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://0.0.0.0:4000/" rel="alternate" type="text/html" /><updated>2023-03-20T22:07:31-05:00</updated><id>http://0.0.0.0:4000/feed.xml</id><title type="html">NinjaStars</title><subtitle>This site provides all of the infrastructure, tools, techniques, and guides to demonstrate different stages of the attack chain. By using these guides you will demonstrate both red and blue team activities.
-</subtitle><entry><title type="html">Ignore sensitive files in git!</title><link href="http://0.0.0.0:4000/infrastructure/2021/11/19/infrastructure-gitignore.html" rel="alternate" type="text/html" title="Ignore sensitive files in git!" /><published>2021-11-19T14:34:10-06:00</published><updated>2021-11-19T14:34:10-06:00</updated><id>http://0.0.0.0:4000/infrastructure/2021/11/19/infrastructure-gitignore</id><content type="html" xml:base="http://0.0.0.0:4000/infrastructure/2021/11/19/infrastructure-gitignore.html">&lt;p&gt;
-When using tools like Terraform and repositories like Github together there is a danger in exposing too much data. Automation tools like Terraform typically require you to store account details and credentials. This is information you certainly do not want exposed publicly as it would completely expose your access.
-&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.5.2">Jekyll</generator><link href="http://0.0.0.0:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://0.0.0.0:4000/" rel="alternate" type="text/html" /><updated>2023-03-20T22:10:56-05:00</updated><id>http://0.0.0.0:4000/feed.xml</id><title type="html">NinjaStars</title><subtitle>This site provides all of the infrastructure, tools, techniques, and guides to demonstrate different stages of the attack chain. By using these guides you will demonstrate both red and blue team activities.
+</subtitle><entry><title type="html">Ignore sensitive files in git</title><link href="http://0.0.0.0:4000/infrastructure/2021/11/19/infrastructure-gitignore.html" rel="alternate" type="text/html" title="Ignore sensitive files in git" /><published>2021-11-19T14:34:10-06:00</published><updated>2021-11-19T14:34:10-06:00</updated><id>http://0.0.0.0:4000/infrastructure/2021/11/19/infrastructure-gitignore</id><content type="html" xml:base="http://0.0.0.0:4000/infrastructure/2021/11/19/infrastructure-gitignore.html">&lt;p&gt;When using tools like Terraform and repositories like Github together there is a danger in exposing too much data. Automation tools like Terraform typically require you to store account details and credentials. This is information you certainly do not want exposed publicly as it would completely expose your access.&lt;/p&gt;
 
-&lt;h3&gt;Step 1 - Create a gitignore&lt;/h3&gt;
+&lt;h3 id=&quot;step-1---create-a-gitignore&quot;&gt;Step 1 - Create a gitignore&lt;/h3&gt;
 
-&lt;p&gt;
-I've placed a global gitignore file in my ~/Documents folder (you can put it anywhere) so that any repository worked with will not publish sensitive data. The file looks like this;
-&lt;/p&gt;
+&lt;p&gt;I’ve placed a global gitignore file in my ~/Documents folder (you can put it anywhere) so that any repository worked with will not publish sensitive data. The file looks like this;&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# Local .terraform directories
 **/.terraform/*
@@ -45,35 +41,27 @@ override.tf.json
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;
-You can see that this will prevent files like terraform.tfvars along with state files to be pushed to the repository.
-&lt;p&gt;
+&lt;p&gt;You can see that this will prevent files like terraform.tfvars along with state files to be pushed to the repository.&lt;/p&gt;
 
-&lt;br /&gt;
-&lt;br /&gt;
+&lt;h3 id=&quot;step-2---set-the-variable&quot;&gt;Step 2 - Set the variable&lt;/h3&gt;
 
-&lt;h3&gt;Step 2 - Set the variable&lt;/h3&gt;
+&lt;p&gt;Set the global variable for git to use this file, meaning that it will affect all repositories on this system.&lt;/p&gt;
 
-&lt;p&gt;
-Set the global variable for git to use this file, meaning that it will affect all repositories on this system.
-&lt;p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git config --global core.excludesfile ~/Documents/.gitignore
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
-```
-git config --global core.excludesfile ~/Documents/.gitignore
-```
+&lt;h3 id=&quot;step-3---remove-files-accidentally-pushed&quot;&gt;Step 3 - Remove files accidentally pushed&lt;/h3&gt;
 
-&lt;h3&gt;Step 3 - Remove files accidentally pushed&lt;/h3&gt;
+&lt;p&gt;If you have pushed a file to the repository that shouldn’t be there you have a couple of options. You could destroy the entire repository and then re-initialize git on your localhost. Or you can remove the individual files with a command like this (replacing terraform.tfvars with the file you want removed.&lt;/p&gt;
 
-&lt;p&gt;
-If you have pushed a file to the repository that shouldn't be there you have a couple of options. You could destroy the entire repository and then re-initialize git on your localhost. Or you can remove the individual files with a command like this (replacing terraform.tfvars with the file you want removed.
-&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git rm -f terraform.tfvars
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
-```
-git rm -f terraform.tfvars
-```
-
-&lt;!-- Cloudflare Web Analytics --&gt;&lt;script defer=&quot;&quot; src=&quot;https://static.cloudflareinsights.com/beacon.min.js&quot; data-cf-beacon=&quot;{&amp;quot;token&amp;quot;: &amp;quot;3ff248322f9d497f8802ebf7d47130c1&amp;quot;}&quot;&gt;&lt;/script&gt;&lt;!-- End Cloudflare Web Analytics --&gt;
-&lt;/p&gt;&lt;/p&gt;&lt;/p&gt;&lt;/p&gt;</content><author><name></name></author><category term="infrastructure" /><summary type="html">When using tools like Terraform and repositories like Github together there is a danger in exposing too much data. Automation tools like Terraform typically require you to store account details and credentials. This is information you certainly do not want exposed publicly as it would completely expose your access.</summary></entry><entry><title type="html">Bitbucket Server</title><link href="http://0.0.0.0:4000/infrastructure/2021/11/19/infrastructure-bitbucket.html" rel="alternate" type="text/html" title="Bitbucket Server" /><published>2021-11-19T14:34:10-06:00</published><updated>2021-11-19T14:34:10-06:00</updated><id>http://0.0.0.0:4000/infrastructure/2021/11/19/infrastructure-bitbucket</id><content type="html" xml:base="http://0.0.0.0:4000/infrastructure/2021/11/19/infrastructure-bitbucket.html">&lt;p&gt;This guide walks through how to instantiate a Virtual Machine (VM) in Google Cloud Platform (GCP) with a running Bitbucket container, using Terraform.&lt;/p&gt;
+&lt;!-- Cloudflare Web Analytics --&gt;
+&lt;script defer=&quot;&quot; src=&quot;https://static.cloudflareinsights.com/beacon.min.js&quot; data-cf-beacon=&quot;{&amp;quot;token&amp;quot;: &amp;quot;3ff248322f9d497f8802ebf7d47130c1&amp;quot;}&quot;&gt;&lt;/script&gt;
+&lt;!-- End Cloudflare Web Analytics --&gt;</content><author><name></name></author><category term="infrastructure" /><summary type="html">When using tools like Terraform and repositories like Github together there is a danger in exposing too much data. Automation tools like Terraform typically require you to store account details and credentials. This is information you certainly do not want exposed publicly as it would completely expose your access.</summary></entry><entry><title type="html">Bitbucket Server</title><link href="http://0.0.0.0:4000/infrastructure/2021/11/19/infrastructure-bitbucket.html" rel="alternate" type="text/html" title="Bitbucket Server" /><published>2021-11-19T14:34:10-06:00</published><updated>2021-11-19T14:34:10-06:00</updated><id>http://0.0.0.0:4000/infrastructure/2021/11/19/infrastructure-bitbucket</id><content type="html" xml:base="http://0.0.0.0:4000/infrastructure/2021/11/19/infrastructure-bitbucket.html">&lt;p&gt;This guide walks through how to instantiate a Virtual Machine (VM) in Google Cloud Platform (GCP) with a running Bitbucket container, using Terraform.&lt;/p&gt;
 
 &lt;p&gt;Getting this type of infrastructure setup on a mac is often painful or not possible. Ideally this deploys enough that you’re able to destroy it when done using it (or at least shut it down).&lt;/p&gt;
 

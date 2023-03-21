@@ -3,9 +3,9 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Ignore sensitive files in git! | NinjaStars</title>
+<title>Ignore sensitive files in git | NinjaStars</title>
 <meta name="generator" content="Jekyll v3.5.2" />
-<meta property="og:title" content="Ignore sensitive files in git!" />
+<meta property="og:title" content="Ignore sensitive files in git" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="When using tools like Terraform and repositories like Github together there is a danger in exposing too much data. Automation tools like Terraform typically require you to store account details and credentials. This is information you certainly do not want exposed publicly as it would completely expose your access." />
 <meta property="og:description" content="When using tools like Terraform and repositories like Github together there is a danger in exposing too much data. Automation tools like Terraform typically require you to store account details and credentials. This is information you certainly do not want exposed publicly as it would completely expose your access." />
@@ -15,7 +15,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2021-11-19T14:34:10-06:00" />
 <script type="application/ld+json">
-{"description":"When using tools like Terraform and repositories like Github together there is a danger in exposing too much data. Automation tools like Terraform typically require you to store account details and credentials. This is information you certainly do not want exposed publicly as it would completely expose your access.","@type":"BlogPosting","url":"http://0.0.0.0:4000/infrastructure/2021/11/19/infrastructure-gitignore.html","headline":"Ignore sensitive files in git!","dateModified":"2021-11-19T14:34:10-06:00","datePublished":"2021-11-19T14:34:10-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://0.0.0.0:4000/infrastructure/2021/11/19/infrastructure-gitignore.html"},"@context":"https://schema.org"}</script>
+{"description":"When using tools like Terraform and repositories like Github together there is a danger in exposing too much data. Automation tools like Terraform typically require you to store account details and credentials. This is information you certainly do not want exposed publicly as it would completely expose your access.","@type":"BlogPosting","url":"http://0.0.0.0:4000/infrastructure/2021/11/19/infrastructure-gitignore.html","headline":"Ignore sensitive files in git","dateModified":"2021-11-19T14:34:10-06:00","datePublished":"2021-11-19T14:34:10-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://0.0.0.0:4000/infrastructure/2021/11/19/infrastructure-gitignore.html"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://0.0.0.0:4000/feed.xml" title="NinjaStars" /></head>
 <body><header class="site-header" role="banner">
@@ -38,22 +38,18 @@
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Ignore sensitive files in git!</h1>
+    <h1 class="post-title p-name" itemprop="name headline">Ignore sensitive files in git</h1>
     <p class="post-meta">
       <time class="dt-published" datetime="2021-11-19T14:34:10-06:00" itemprop="datePublished">Nov 19, 2021
       </time></p>
   </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p>
-When using tools like Terraform and repositories like Github together there is a danger in exposing too much data. Automation tools like Terraform typically require you to store account details and credentials. This is information you certainly do not want exposed publicly as it would completely expose your access.
-</p>
+    <p>When using tools like Terraform and repositories like Github together there is a danger in exposing too much data. Automation tools like Terraform typically require you to store account details and credentials. This is information you certainly do not want exposed publicly as it would completely expose your access.</p>
 
-<h3>Step 1 - Create a gitignore</h3>
+<h3 id="step-1---create-a-gitignore">Step 1 - Create a gitignore</h3>
 
-<p>
-I've placed a global gitignore file in my ~/Documents folder (you can put it anywhere) so that any repository worked with will not publish sensitive data. The file looks like this;
-</p>
+<p>I’ve placed a global gitignore file in my ~/Documents folder (you can put it anywhere) so that any repository worked with will not publish sensitive data. The file looks like this;</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code># Local .terraform directories
 **/.terraform/*
@@ -91,35 +87,27 @@ override.tf.json
 </code></pre>
 </div>
 
-<p>
-You can see that this will prevent files like terraform.tfvars along with state files to be pushed to the repository.
-<p>
+<p>You can see that this will prevent files like terraform.tfvars along with state files to be pushed to the repository.</p>
 
-<br />
-<br />
+<h3 id="step-2---set-the-variable">Step 2 - Set the variable</h3>
 
-<h3>Step 2 - Set the variable</h3>
+<p>Set the global variable for git to use this file, meaning that it will affect all repositories on this system.</p>
 
-<p>
-Set the global variable for git to use this file, meaning that it will affect all repositories on this system.
-<p>
+<div class="highlighter-rouge"><pre class="highlight"><code>git config --global core.excludesfile ~/Documents/.gitignore
+</code></pre>
+</div>
 
-```
-git config --global core.excludesfile ~/Documents/.gitignore
-```
+<h3 id="step-3---remove-files-accidentally-pushed">Step 3 - Remove files accidentally pushed</h3>
 
-<h3>Step 3 - Remove files accidentally pushed</h3>
+<p>If you have pushed a file to the repository that shouldn’t be there you have a couple of options. You could destroy the entire repository and then re-initialize git on your localhost. Or you can remove the individual files with a command like this (replacing terraform.tfvars with the file you want removed.</p>
 
-<p>
-If you have pushed a file to the repository that shouldn't be there you have a couple of options. You could destroy the entire repository and then re-initialize git on your localhost. Or you can remove the individual files with a command like this (replacing terraform.tfvars with the file you want removed.
-</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>git rm -f terraform.tfvars
+</code></pre>
+</div>
 
-```
-git rm -f terraform.tfvars
-```
-
-<!-- Cloudflare Web Analytics --><script defer="" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon="{&quot;token&quot;: &quot;3ff248322f9d497f8802ebf7d47130c1&quot;}"></script><!-- End Cloudflare Web Analytics -->
-</p></p></p></p>
+<!-- Cloudflare Web Analytics -->
+<script defer="" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon="{&quot;token&quot;: &quot;3ff248322f9d497f8802ebf7d47130c1&quot;}"></script>
+<!-- End Cloudflare Web Analytics -->
 
   </div><a class="u-url" href="/infrastructure/2021/11/19/infrastructure-gitignore.html" hidden></a>
 </article>
